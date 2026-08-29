@@ -1,0 +1,848 @@
+\
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#10101a">
+<meta name="description" content="A little apology, from my heart. 💙">
+<title>A Little Apology, From My Heart 💙</title>
+
+<style>
+  :root {
+    --bg: #0b0b13;
+    --bg2: #141421;
+    --card: rgba(24, 24, 38, .82);
+    --card-soft: rgba(255,255,255,.045);
+    --text: #f8f7fb;
+    --muted: #b9b6c7;
+    --blue: #8db8ff;
+    --blue2: #b8d4ff;
+    --pink: #ff9fca;
+    --border: rgba(184,212,255,.16);
+    --shadow: 0 30px 100px rgba(0,0,0,.48);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    color: var(--text);
+    overflow-x: hidden;
+    background:
+      radial-gradient(circle at 12% 8%, rgba(141,184,255,.15), transparent 28%),
+      radial-gradient(circle at 88% 78%, rgba(255,159,202,.11), transparent 30%),
+      radial-gradient(circle at 50% 105%, rgba(150,120,255,.10), transparent 35%),
+      linear-gradient(135deg, var(--bg), var(--bg2));
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background-image:
+      radial-gradient(rgba(255,255,255,.12) 1px, transparent 1px);
+    background-size: 42px 42px;
+    opacity: .12;
+    mask-image: linear-gradient(to bottom, black, transparent 85%);
+  }
+
+  .hearts {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  .heart {
+    position: absolute;
+    bottom: -40px;
+    opacity: 0;
+    animation: floatUp linear forwards;
+    filter: drop-shadow(0 0 8px rgba(255,159,202,.16));
+  }
+
+  @keyframes floatUp {
+    0% { transform: translate3d(0,0,0) rotate(0); opacity: 0; }
+    12% { opacity: .42; }
+    85% { opacity: .18; }
+    100% { transform: translate3d(var(--drift), -115vh, 0) rotate(28deg); opacity: 0; }
+  }
+
+  .page {
+    display: none;
+    min-height: 100vh;
+    padding: 70px 20px 100px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .start-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background: rgba(7,7,13,.94);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    transition: opacity .45s ease, visibility .45s ease;
+  }
+
+  .start-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .start-card {
+    width: min(560px, 92vw);
+    padding: clamp(28px, 6vw, 48px);
+    text-align: center;
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    background: linear-gradient(145deg, rgba(31,31,48,.94), rgba(18,18,29,.94));
+    box-shadow: var(--shadow);
+  }
+
+  .start-heart {
+    font-size: 78px;
+    color: var(--pink);
+    margin-bottom: 8px;
+    animation: heartbeat 1.7s ease-in-out infinite;
+  }
+
+  .page.active {
+    display: flex;
+    animation: pageIn .55s cubic-bezier(.2,.75,.25,1);
+  }
+
+  @keyframes pageIn {
+    from { opacity: 0; transform: translateY(18px) scale(.985); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .card {
+    width: min(820px, 94vw);
+    padding: clamp(26px, 5vw, 52px);
+    border: 1px solid var(--border);
+    border-radius: 34px;
+    background: linear-gradient(145deg, rgba(31,31,48,.86), rgba(18,18,29,.82));
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: "";
+    position: absolute;
+    width: 240px;
+    height: 240px;
+    right: -120px;
+    top: -120px;
+    border-radius: 50%;
+    background: rgba(141,184,255,.10);
+    filter: blur(3px);
+  }
+
+  .card::after {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    left: -100px;
+    bottom: -100px;
+    border-radius: 50%;
+    background: rgba(255,159,202,.08);
+  }
+
+  .content { position: relative; z-index: 2; }
+  .center { text-align: center; }
+
+  .chapter {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    padding: 8px 14px;
+    border: 1px solid rgba(184,212,255,.22);
+    border-radius: 999px;
+    color: var(--blue2);
+    background: rgba(141,184,255,.06);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .chapter::before {
+    content: "♡";
+    font-size: 15px;
+  }
+
+  .script {
+    font-family: "Brush Script MT", "Segoe Script", cursive;
+    font-weight: 500;
+  }
+
+  .eyebrow {
+    color: var(--pink);
+    font-size: 14px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  h1, h2 {
+    margin: 0;
+    line-height: 1.05;
+  }
+
+  h1 {
+    font-size: clamp(58px, 11vw, 104px);
+    color: var(--blue);
+    text-shadow: 0 0 35px rgba(141,184,255,.16);
+  }
+
+  h2 {
+    font-size: clamp(30px, 5vw, 54px);
+  }
+
+  p {
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1.85;
+  }
+
+  .lead {
+    max-width: 650px;
+    margin: 18px auto 0;
+    font-size: 19px;
+  }
+
+  .kitty {
+    width: 170px;
+    height: 170px;
+    margin: 0 auto 25px;
+    display: grid;
+    place-items: center;
+    border-radius: 42px;
+    background:
+      linear-gradient(145deg, rgba(255,255,255,.96), rgba(232,238,255,.90));
+    font-size: 96px;
+    box-shadow:
+      0 18px 45px rgba(0,0,0,.32),
+      inset 0 1px 0 rgba(255,255,255,.8);
+    animation: gentleFloat 4s ease-in-out infinite;
+  }
+
+  @keyframes gentleFloat {
+    50% { transform: translateY(-7px) rotate(1deg); }
+  }
+
+  .hero-heart {
+    display: inline-block;
+    color: var(--pink);
+    animation: heartbeat 1.7s ease-in-out infinite;
+  }
+
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    14% { transform: scale(1.12); }
+    28% { transform: scale(1); }
+  }
+
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 32px;
+  }
+
+  button, .file-label {
+    border: 0;
+    border-radius: 999px;
+    padding: 14px 23px;
+    font: inherit;
+    font-size: 15px;
+    cursor: pointer;
+    transition: transform .22s ease, box-shadow .22s ease, background .22s ease;
+  }
+
+  button:hover, .file-label:hover {
+    transform: translateY(-3px);
+  }
+
+  button:active, .file-label:active {
+    transform: translateY(-1px) scale(.98);
+  }
+
+  .primary {
+    color: #101522;
+    background: linear-gradient(135deg, #8db8ff, #c4dcff);
+    box-shadow: 0 12px 30px rgba(141,184,255,.22);
+    font-weight: 700;
+  }
+
+  .secondary, .back-btn {
+    color: #d9d7e3;
+    background: rgba(255,255,255,.045);
+    border: 1px solid rgba(255,255,255,.10);
+  }
+
+  .next-btn {
+    color: #101522;
+    background: linear-gradient(135deg, #8db8ff, #c4dcff);
+    box-shadow: 0 12px 30px rgba(141,184,255,.22);
+    font-weight: 700;
+  }
+
+  .letter {
+    margin-top: 26px;
+    padding: clamp(22px, 4vw, 34px);
+    border-radius: 24px;
+    background: rgba(7,7,13,.30);
+    border: 1px solid rgba(255,255,255,.07);
+    border-left: 3px solid var(--blue);
+  }
+
+  .letter p { margin: 14px 0; }
+  .letter .signature {
+    color: var(--blue);
+    font-size: 32px;
+    margin-top: 24px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 30px;
+  }
+
+  .reason {
+    min-height: 145px;
+    padding: 22px 15px;
+    border-radius: 22px;
+    background: rgba(255,255,255,.035);
+    border: 1px solid rgba(255,255,255,.075);
+    text-align: center;
+    transition: .25s ease;
+  }
+
+  .reason:hover {
+    transform: translateY(-6px);
+    border-color: rgba(141,184,255,.34);
+    background: rgba(141,184,255,.06);
+  }
+
+  .reason .emoji {
+    font-size: 31px;
+    margin-bottom: 10px;
+  }
+
+  .reason span {
+    display: block;
+    color: #e1deea;
+    line-height: 1.5;
+    font-size: 15px;
+  }
+
+  .music-box {
+    margin-top: 28px;
+    padding: 28px;
+    border-radius: 25px;
+    background: rgba(255,255,255,.035);
+    border: 1px solid rgba(255,255,255,.075);
+  }
+
+  .music-icon {
+    font-size: 72px;
+    animation: musicBob 2.5s ease-in-out infinite;
+  }
+
+  @keyframes musicBob {
+    50% { transform: translateY(-6px) rotate(-2deg); }
+  }
+
+  input[type=file] { display: none; }
+  audio { width: 100%; margin-top: 18px; }
+
+  .flower {
+    font-size: 112px;
+    margin: 18px 0;
+    filter: drop-shadow(0 16px 20px rgba(141,184,255,.18));
+    animation: sway 3.2s ease-in-out infinite;
+  }
+
+  @keyframes sway {
+    0%, 100% { transform: rotate(-2deg) translateY(0); }
+    50% { transform: rotate(3deg) translateY(-7px); }
+  }
+
+  .final-message {
+    font-size: clamp(40px, 8vw, 76px);
+    color: var(--blue);
+    margin: 20px 0;
+    text-shadow: 0 0 35px rgba(141,184,255,.15);
+  }
+
+  .love-line {
+    color: var(--pink);
+    font-size: 25px;
+    letter-spacing: 5px;
+  }
+
+  .small {
+    font-size: 13px;
+    color: #898697;
+  }
+
+  .reply {
+    min-height: 30px;
+    margin-top: 16px;
+    color: var(--blue);
+  }
+
+  .progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    z-index: 50;
+    background: linear-gradient(90deg, #8db8ff, #ff9fca);
+    transition: width .35s ease;
+  }
+
+  .dots {
+    position: fixed;
+    left: 50%;
+    bottom: 17px;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 7px;
+    z-index: 20;
+    padding: 9px 12px;
+    border-radius: 999px;
+    background: rgba(8,8,14,.72);
+    border: 1px solid rgba(255,255,255,.08);
+    backdrop-filter: blur(12px);
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: #3c3b4a;
+    cursor: pointer;
+    transition: .25s;
+  }
+
+  .dot.active {
+    width: 25px;
+    border-radius: 10px;
+    background: var(--blue);
+  }
+
+  .tap-hint {
+    margin-top: 22px;
+    font-size: 12px;
+    color: #777486;
+    letter-spacing: 1px;
+  }
+
+  @media (max-width: 650px) {
+    .start-card { border-radius: 25px; }
+    .start-heart { font-size: 64px; }
+
+
+    .page { padding: 45px 15px 90px; }
+    .card { border-radius: 27px; }
+    .grid { grid-template-columns: 1fr; }
+    p { font-size: 16px; }
+    .kitty { width: 145px; height: 145px; font-size: 80px; }
+    .music-box { padding: 22px 16px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: .01ms !important;
+    }
+  }
+</style>
+</head>
+
+<body>
+<div class="start-overlay" id="startOverlay">
+  <div class="start-card">
+    <div class="start-heart">♡</div>
+    <div class="chapter">A Little Something For You</div>
+    <h2>Before you continue...</h2>
+    <p>I made this little page for you. Take your time and read everything. 💙</p>
+    <button class="primary" id="startButton">Tap to Begin 💙</button>
+    <p class="small">Music may begin after you tap.</p>
+  </div>
+</div>
+
+<div class="progress" id="progress"></div>
+<div class="hearts" id="hearts"></div>
+
+<!-- CHAPTER 01 -->
+<section class="page active" id="home">
+  <div class="card center">
+    <div class="content">
+      <div class="chapter">Chapter 01 · Please Hear Me Out</div>
+
+      <div class="kitty">🥺</div>
+
+      <div class="script" style="font-size:58px;">Hey...</div>
+      <h2 style="color:var(--blue); margin-top:10px;">
+        I know you're upset with me... <span class="hero-heart">♡</span>
+      </h2>
+
+      <p class="lead">
+        I know I made a mistake. And before anything else,
+        I just want a little moment to tell you what has been in my heart.
+      </p>
+
+      <div class="buttons">
+        <button class="primary" onclick="nextPage()">Okay, I'm listening... 💗</button>
+        <button class="secondary" onclick="stillMad()">No, I'm still angry 😤</button>
+      </div>
+
+      <p id="madReply" class="reply script"></p>
+      <div class="tap-hint">take your time · there's no rush ♡</div>
+    </div>
+  </div>
+</section>
+
+<!-- CHAPTER 02 -->
+<section class="page" id="sorry">
+  <div class="card">
+    <div class="content">
+      <div class="center">
+        <div class="chapter">Chapter 02 · From My Heart</div>
+        <div class="script" style="font-size:56px; color:var(--blue);">
+          I'm Truly Sorry... 💙
+        </div>
+      </div>
+
+      <div class="letter">
+        <p class="script" style="color:var(--blue); font-size:30px;">My Love...</p>
+
+        <p>
+          I’m sorry if sometimes it feels like I’m only saying sorry
+          because I’m lacking in actions. I know there are times when I make
+          you feel like everything I do is pilit lang, like I’m only doing
+          these things because you told me to.
+        </p>
+
+        <p>
+          But the thing is, I’m still slowly learning how to love you
+          in the way that you need and deserve. I may not always know
+          what to do or how to show it, but that doesn’t mean that what
+          I’m doing is forced.
+        </p>
+
+        <p>
+          I genuinely want to do these things for you. I’m just still
+          learning how to express the love that I have for you through
+          my actions.
+        </p>
+
+        <p>
+          I know words aren’t enough, especially when what you need from me
+          is something you can actually feel and see. I’m sorry if I haven’t
+          been able to show you that consistently.
+        </p>
+
+        <p>
+          I’m not trying to make you feel like I’m doing things just because
+          you asked me to. I’m doing them because I genuinely want to learn,
+          grow, and become better at loving you.
+        </p>
+
+        <p class="signature script">— I’m sorry. I’m still learning. 💙</p>
+      </div>
+
+      <div class="buttons">
+        <button class="back-btn" onclick="previousPage()">← Back</button>
+        <button class="primary" onclick="nextPage()">Keep Reading →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHAPTER 03 -->
+<section class="page" id="favorite">
+  <div class="card">
+    <div class="content">
+      <div class="center">
+        <div class="chapter">Chapter 03 · Why You Matter</div>
+        <div class="script" style="font-size:52px; color:var(--blue);">
+          Why You Are So Special To Me 💙
+        </div>
+        <div class="kitty" style="margin-top:25px;">🧸💗</div>
+      </div>
+
+      <div class="grid">
+        <div class="reason"><div class="emoji">🌙</div><span>I want to be someone who stays beside you, not someone who adds to your pain.</span></div>
+        <div class="reason"><div class="emoji">☀️</div><span>You became part of the little moments that make my days feel brighter.</span></div>
+        <div class="reason"><div class="emoji">💫</div><span>Meeting you changed something in me that I will always be grateful for.</span></div>
+        <div class="reason"><div class="emoji">🌸</div><span>Your smile can turn an ordinary moment into something I want to remember.</span></div>
+        <div class="reason"><div class="emoji">🦋</div><span>You mean more to me than I sometimes know how to put into words.</span></div>
+        <div class="reason"><div class="emoji">✨</div><span>I don't want to hurt you. I want to learn, grow, and do better.</span></div>
+      </div>
+
+      <div class="buttons">
+        <button class="back-btn" onclick="previousPage()">← Back</button>
+        <button class="primary" onclick="nextPage()">Next Page →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHAPTER 04 -->
+<section class="page" id="songs">
+  <div class="card">
+    <div class="content">
+      <div class="center">
+        <div class="chapter">Chapter 04 · Our Little Memories</div>
+        <div class="script" style="font-size:55px; color:var(--blue);">
+          Our Song 🎵
+        </div>
+        <p>For the song that somehow reminds me of you.</p>
+      </div>
+
+      <div class="music-box">
+        <div class="center">
+          <div class="music-icon">🎶</div>
+          <p>
+            A little song for you — because sometimes a song can say
+            what words can't. 💙
+          </p>
+
+          <div class="script" style="font-size:30px; color:var(--blue); margin-top:18px;">
+            Nothing — Bruno Mars 🎵
+          </div>
+
+          <audio id="audio" controls preload="metadata">
+            <source src="Nothing.mp3" type="audio/mpeg">
+            Your browser does not support the audio player.
+          </audio>
+
+          <p id="songName" class="small center">
+            Nothing — Bruno Mars
+          </p>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <button class="back-btn" onclick="previousPage()">← Back</button>
+        <button class="primary" onclick="nextPage()">Next Page →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHAPTER 05 -->
+<section class="page" id="flower">
+  <div class="card center">
+    <div class="content">
+      <div class="chapter">Chapter 05 · Just For You</div>
+
+      <div class="script" style="font-size:56px; color:var(--blue);">
+        For You 💙
+      </div>
+
+      <div class="flower">💐</div>
+
+      <p style="font-size:23px; color:#e8e5ef;">
+        My Love, this is for you... 🥰
+      </p>
+
+      <p>
+        Thank you for the patience you've given me,
+        for the moments we've shared,
+        and for being someone I never wanted to lose.
+      </p>
+
+      <p>
+        I know flowers can't fix things.
+        But if I could, I'd still give you one —
+        just to remind you that behind all these words
+        is someone who is genuinely sorry.
+      </p>
+
+      <div class="buttons">
+        <button class="back-btn" onclick="previousPage()">← Back</button>
+        <button class="primary" onclick="nextPage()">One Last Message →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL -->
+<section class="page" id="final">
+  <div class="card final">
+    <div class="content">
+      <div class="kitty">🥰</div>
+
+      <div class="chapter">Final Chapter · One Last Thing</div>
+
+      <div class="script" style="font-size:50px;">
+        Thank You For Hearing Me Out 💙
+      </div>
+
+      <div class="final-message script">I Love You</div>
+
+      <p>
+        Whatever happens after this, I want you to know that
+        I'm genuinely sorry. I don't expect a single page to erase
+        what happened.
+      </p>
+
+      <p>
+        I just hope you can feel that every word here came from my heart.
+        And if I get another chance, I'll do my best to make things right.
+      </p>
+
+      <p class="love-line">♡ ♡ ♡</p>
+
+      <div class="buttons">
+        <button class="primary" onclick="forgive()">Okay... I forgive you 🥺💗</button>
+        <button class="back-btn" onclick="previousPage()">← Back</button>
+        <button class="secondary" onclick="showPage(0)">Start Again ↻</button>
+      </div>
+
+      <p id="forgiveReply" class="reply script" style="font-size:29px;"></p>
+    </div>
+  </div>
+</section>
+
+<script>
+  const pages = Array.from(document.querySelectorAll(".page"));
+  let currentPage = 0;
+
+  const dots = document.createElement("div");
+  dots.className = "dots";
+
+  pages.forEach((_, i) => {
+    const dot = document.createElement("button");
+    dot.className = "dot";
+    dot.setAttribute("aria-label", "Go to chapter " + (i + 1));
+    dot.onclick = () => showPage(i);
+    dots.appendChild(dot);
+  });
+
+  document.body.appendChild(dots);
+
+  function showPage(index) {
+    if (index < 0 || index >= pages.length) return;
+
+    currentPage = index;
+
+    pages.forEach((p, i) => {
+      p.classList.toggle("active", i === currentPage);
+    });
+
+    dots.querySelectorAll(".dot").forEach((d, i) => {
+      d.classList.toggle("active", i === currentPage);
+    });
+
+    const progress = document.getElementById("progress");
+    progress.style.width = ((currentPage / (pages.length - 1)) * 100) + "%";
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function nextPage() {
+    showPage(currentPage + 1);
+  }
+
+  function previousPage() {
+    showPage(currentPage - 1);
+  }
+
+  function stillMad() {
+    const el = document.getElementById("madReply");
+    el.textContent = "Okay... I'll wait. You have every right to be upset. I'm still really, really sorry. 🥺💙";
+
+    setTimeout(() => {
+      nextPage();
+    }, 1700);
+  }
+
+  function forgive() {
+    const el = document.getElementById("forgiveReply");
+    el.textContent = "YAY... 🥹💙 Come here. *big hug* 🤗";
+    burstHearts();
+  }
+
+  const audio = document.getElementById("audio");
+  const startOverlay = document.getElementById("startOverlay");
+  const startButton = document.getElementById("startButton");
+
+  startButton.addEventListener("click", () => {
+    startOverlay.classList.add("hidden");
+
+    // Browsers may allow playback because this runs directly from the tap.
+    audio.play().catch(() => {
+      // If autoplay is blocked, the normal audio controls remain available.
+    });
+  });
+
+  function createHeart() {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.textContent = ["♥", "♡", "💕", "💗", "💖"][Math.floor(Math.random() * 5)];
+
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.fontSize = (11 + Math.random() * 21) + "px";
+    h.style.animationDuration = (7 + Math.random() * 8) + "s";
+    h.style.setProperty("--drift", (Math.random() * 100 - 50) + "px");
+
+    document.getElementById("hearts").appendChild(h);
+
+    setTimeout(() => h.remove(), 16000);
+  }
+
+  function burstHearts() {
+    for (let i = 0; i < 30; i++) {
+      setTimeout(createHeart, i * 55);
+    }
+  }
+
+  showPage(0);
+
+  for (let i = 0; i < 18; i++) {
+    setTimeout(createHeart, i * 260);
+  }
+
+  setInterval(createHeart, 900);
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight") nextPage();
+    if (e.key === "ArrowLeft") previousPage();
+  });
+</script>
+
+</body>
+</html>
